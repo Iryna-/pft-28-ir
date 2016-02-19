@@ -1,4 +1,8 @@
 *.class
+.gradle
+build/
+gradle-app.setting
+!gradle-wrapper.jar
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
