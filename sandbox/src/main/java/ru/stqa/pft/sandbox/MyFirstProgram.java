@@ -7,6 +7,7 @@ public class MyFirstProgram {
     hello("User");
     hello("Iryna");
 
+
     Square s = new Square(5);
     System.out.println("The area of a square with a side lenght of " + s.l + " = " + s.area());
 
