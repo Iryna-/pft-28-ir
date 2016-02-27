@@ -1,27 +1,18 @@
 package ru.stqa.pft.addressbook.appmanager;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
 public class ApplicationManager {
 
-  FirefoxDriver wd;
-
+  private FirefoxDriver wd;
   private ContactHelper contactHelper;
   private NavigationHelper navigatioHelper;
   private GroupHelper groupHelper;
+  private SessionHelper sessionHelper;
 
-  public static boolean isAlertPresent(FirefoxDriver wd) {
-    try {
-      wd.switchTo().alert();
-      return true;
-    } catch (NoAlertPresentException e) {
-      return false;
-    }
-  }
+
 
   public void init() {
     wd = new FirefoxDriver();
@@ -30,15 +21,8 @@ public class ApplicationManager {
     groupHelper = new GroupHelper(wd);
     navigatioHelper = new NavigationHelper(wd);
     contactHelper = new ContactHelper(wd);
-    login("admin", "secret");
-  }
-
-  public void login(String username, String password) {
-    wd.findElement(By.name("user")).click();
-    wd.findElement(By.name("user")).sendKeys(username);
-    wd.findElement(By.name("pass")).click();
-    wd.findElement(By.name("pass")).sendKeys(password);
-    wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
+    sessionHelper = new SessionHelper(wd);
+    sessionHelper.login("admin", "secret");
   }
 
   public void stop() {
@@ -56,4 +40,5 @@ public class ApplicationManager {
   public ContactHelper getContactHelper() {
     return contactHelper;
   }
+
 }
