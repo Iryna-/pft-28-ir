@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/addressbook-web-tests/addressbook-web-tests.iml" filepath="$PROJECT_DIR$/addressbook-web-tests/addressbook-web-tests.iml" />
+      <module fileurl="file://$USER_HOME$/Iryna personal backup/Iryna/SW_testing/Automation training/learning_java/learning_java.iml" filepath="$USER_HOME$/Iryna personal backup/Iryna/SW_testing/Automation training/learning_java/learning_java.iml" />
       <module fileurl="file://$PROJECT_DIR$/sandbox/sandbox.iml" filepath="$PROJECT_DIR$/sandbox/sandbox.iml" />
     </modules>
   </component>
