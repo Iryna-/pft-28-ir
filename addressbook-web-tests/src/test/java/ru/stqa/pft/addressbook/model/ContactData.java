@@ -1,40 +1,15 @@
 package ru.stqa.pft.addressbook.model;
 
 public class ContactData {
-  private final String name;
-  private final String surname;
-  private final String email;
-  private final String phone;
-  private final String middleName;
-  private final String address;
+  private String name;
+  private String surname;
+  private String email;
+  private String phone;
+  private String middleName;
+  private String address;
   private String group;
-  private int id;
+  private int id = Integer.MAX_VALUE;
 
-
-
-
-  public ContactData(String name, String middleName, String surname, String email, String phone, String address, String group) {
-    this.name = name;
-    this.middleName = middleName;
-    this.surname = surname;
-    this.email = email;
-    this.phone = phone;
-    this.address = address;
-    this.group = group;
-    this.id = Integer.MAX_VALUE;
-
-  }
-
-  public ContactData(String name, String middleName, String surname, String email, String phone, String address, String group, int id) {
-    this.name = name;
-    this.middleName = middleName;
-    this.surname = surname;
-    this.email = email;
-    this.phone = phone;
-    this.address = address;
-    this.group = group;
-    this.id = id;
-  }
 
   public String getName() {
     return name;
@@ -66,6 +41,46 @@ public class ContactData {
 
   public int getId() {
     return id;
+  }
+
+  public ContactData withName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public ContactData withSurname(String surname) {
+    this.surname = surname;
+    return this;
+  }
+
+  public ContactData withEmail(String email) {
+    this.email = email;
+    return this;
+  }
+
+  public ContactData withPhone(String phone) {
+    this.phone = phone;
+    return this;
+  }
+
+  public ContactData withMiddleName(String middleName) {
+    this.middleName = middleName;
+    return this;
+  }
+
+  public ContactData withAddress(String address) {
+    this.address = address;
+    return this;
+  }
+
+  public ContactData withGroup(String group) {
+    this.group = group;
+    return this;
+  }
+
+  public ContactData withId(int id) {
+    this.id = id;
+    return this;
   }
 
   @Override
