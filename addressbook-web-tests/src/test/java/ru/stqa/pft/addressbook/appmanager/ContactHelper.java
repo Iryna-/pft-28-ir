@@ -8,10 +8,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase{
 
@@ -43,8 +40,8 @@ public class ContactHelper extends HelperBase{
       click(By.linkText("add new"));
   }
 
-  public void selectContact(int index) {
-    wd.findElements(By.name("selected[]")).get(index).click();
+  public int count() {
+    return wd.findElements(By.name("selected[]")).size();
   }
 
   public void selectContactById (int id) {
@@ -66,26 +63,35 @@ public class ContactHelper extends HelperBase{
   }
 
   public void create(ContactData contact) {
-   initContactCreation();
-   fillOutContactForm(contact, true);
-   submitContactCreation();
+    initContactCreation();
+    fillOutContactForm(contact, true);
+    submitContactCreation();
+    contactCache = null;
   }
 
   public void modify(ContactData contact) {
     initContactModificationById(contact.getId());
     fillOutContactForm(contact, false);
     submitContactModification();
+    contactCache = null;
   }
 
 
   public void delete(ContactData contact) {
     selectContactById(contact.getId());
     deleteSelectedContact();
+    contactCache = null;
   }
 
+  private Contacts contactCache = null;
 
   public Contacts all() {
-    Contacts contacts = new Contacts();
+
+    if (contactCache != null){
+      return new Contacts(contactCache);
+    }
+
+    contactCache = new Contacts();
     List<WebElement> rows = wd.findElements(By.name("entry"));
     for (WebElement row : rows){
       List <WebElement> cells = row.findElements(By.tagName("td"));
@@ -97,9 +103,9 @@ public class ContactHelper extends HelperBase{
               .withName(name)
               .withSurname(surname)
               .withEmail(email).withId(id);
-      contacts.add(contact);
+      contactCache.add(contact);
     }
-    return contacts;
+    return new Contacts(contactCache);
   }
 
 
