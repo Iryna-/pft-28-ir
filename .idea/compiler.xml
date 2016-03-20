@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <resourceExtensions />
+    <wildcardResourcePatterns />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="false">
+        <processorPath useClasspath="true" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="addressbook-web-tests_main" target="1.8" />
+      <module name="addressbook-web-tests_test" target="1.8" />
+      <module name="sandbox_main" target="1.8" />
+      <module name="sandbox_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

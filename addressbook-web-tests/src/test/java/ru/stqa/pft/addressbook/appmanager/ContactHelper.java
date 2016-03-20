@@ -4,6 +4,7 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.internal.Streams;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -25,7 +26,7 @@ public class ContactHelper extends HelperBase{
       type(By.name("middlename"),contactData.getMiddleName());
       type(By.name("lastname"),contactData.getSurname());
       type(By.name("email"),contactData.getEmail());
-      type(By.name("home"),contactData.getPhone());
+      type(By.name("home"),contactData.getHomePhone());
       type(By.name("address2"),contactData.getAddress());
 
       if (creation){
@@ -98,15 +99,45 @@ public class ContactHelper extends HelperBase{
       String surname = cells.get(1).getText();
       String name = cells.get(2).getText();
       String email = cells.get(4).getText();
+      String allPhones = cells.get(5).getText();
+      String allEmails = cells.get(4).getText();
       int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("value"));
       ContactData contact = new ContactData()
               .withName(name)
               .withSurname(surname)
-              .withEmail(email).withId(id);
+              .withEmail(email)
+              .withId(id)
+              .withAllPhones(allPhones)
+              .withAllEmails(allEmails);
       contactCache.add(contact);
     }
     return new Contacts(contactCache);
   }
 
 
+  public ContactData infoFromEditForm(ContactData contact) {
+    initContactModificationById(contact.getId());
+    String name = wd.findElement(By.name("firstname")).getAttribute("value");
+    String surname = wd.findElement(By.name("lastname")).getAttribute("value");
+    String homePhone = wd.findElement(By.name("home")).getAttribute("value");
+    String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+    String workPhone = wd.findElement(By.name("work")).getAttribute("value");
+    String homePhone2 = wd.findElement(By.name("phone2")).getAttribute("value");
+    String email = wd.findElement(By.name("email")).getAttribute("value");
+    String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+    String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+
+    wd.navigate().back();
+    return new ContactData()
+            .withId(contact.getId())
+            .withName(name)
+            .withSurname(surname)
+            .withHomePhone(homePhone)
+            .withMobilePhone(mobile)
+            .withWorkPhone(workPhone)
+            .withHomePhone2(homePhone2)
+            .withEmail(email)
+            .withEmail2(email2)
+            .withEmail3(email3);
+  }
 }
