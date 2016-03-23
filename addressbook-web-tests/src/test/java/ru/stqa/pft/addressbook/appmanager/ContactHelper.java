@@ -4,7 +4,6 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.internal.Streams;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -57,6 +56,11 @@ public class ContactHelper extends HelperBase{
 
   public void initContactModificationById (int id) {
     wd.findElement(By.cssSelector("a[href='edit.php?id=" + id + "']")).click();
+  }
+
+
+  private void checkContactDetailsById(int id) {
+    wd.findElement(By.cssSelector("a[href='view.php?id=" + id + "']")).click();
   }
 
   public void submitContactModification() {
@@ -120,6 +124,7 @@ public class ContactHelper extends HelperBase{
   public ContactData infoFromEditForm(ContactData contact) {
     initContactModificationById(contact.getId());
     String name = wd.findElement(By.name("firstname")).getAttribute("value");
+    String middleName = wd.findElement(By.name("middlename")).getAttribute("value");
     String surname = wd.findElement(By.name("lastname")).getAttribute("value");
     String homePhone = wd.findElement(By.name("home")).getAttribute("value");
     String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
@@ -134,6 +139,7 @@ public class ContactHelper extends HelperBase{
     return new ContactData()
             .withId(contact.getId())
             .withName(name)
+            .withMiddleName(middleName)
             .withSurname(surname)
             .withHomePhone(homePhone)
             .withMobilePhone(mobile)
@@ -144,4 +150,28 @@ public class ContactHelper extends HelperBase{
             .withEmail3(email3)
             .withAddress(address);
   }
+
+  public ContactData infoFromDetailsForm(ContactData contact) {
+
+    checkContactDetailsById(contact.getId());
+    String fullName = wd.findElement(By.cssSelector("#content>b")).getText();
+
+    //this has to be findElements and streamed
+     String [] phones = wd.findElements(By.cssSelector("#content>a"))
+             .stream()
+             .filter((p)-> p.getText() !=null)
+             .map((p)-> p.getText())
+             .toArray((p)-> new String[p] );
+
+    wd.navigate().back();
+    return new ContactData()
+            .withId(contact.getId())
+            .withFullName(fullName)
+            .withHomePhone(phones[0])
+            .withMobilePhone(phones[1])
+            .withWorkPhone(phones[2]);
+            //.withAddress(address);
+  }
+
+
 }

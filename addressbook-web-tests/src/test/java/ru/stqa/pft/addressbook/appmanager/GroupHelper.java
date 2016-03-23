@@ -49,6 +49,7 @@ public class GroupHelper extends HelperBase{
   public void initGroupModification() {
     click(By.name("edit"));
   }
+
   public void submitGroupModification() {
     click(By.name("update"));
   }
@@ -81,9 +82,11 @@ public class GroupHelper extends HelperBase{
 
 
   public Groups all() {
+
     if (groupCache != null){
       return new Groups(groupCache);
     }
+
     groupCache = new Groups();
     List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
     for (WebElement element : elements){

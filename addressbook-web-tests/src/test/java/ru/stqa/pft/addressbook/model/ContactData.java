@@ -16,6 +16,7 @@ public class ContactData {
   private String workPhone;
   private String homePhone2;
   private String allPhones;
+  private String fullName;
 
   @Override
   public boolean equals(Object o) {
@@ -76,6 +77,10 @@ public class ContactData {
 
   public String getWorkPhone() {
     return workPhone;
+  }
+
+  public String getFullName() {
+    return fullName;
   }
 
   public String getAllPhones() {
@@ -172,6 +177,12 @@ public class ContactData {
     this.allEmails = allEmails;
     return  this;
   }
+
+  public ContactData withFullName(String fullName) {
+    this.fullName = fullName;
+    return this;
+  }
+
 
   @Override
   public String toString() {
