@@ -27,9 +27,10 @@ public class ContactHelper extends HelperBase{
       type(By.name("email"),contactData.getEmail());
       type(By.name("home"),contactData.getHomePhone());
       type(By.name("address2"),contactData.getAddress());
-
+      attach(By.name("photo"),contactData.getPhoto());
       if (creation){
-        new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+        new Select(wd.findElement(By.name("new_group")))
+                .selectByVisibleText(contactData.getGroup());
       } else {
         Assert.assertFalse(isElementPresent(By.name("new_group")));
       }
@@ -155,9 +156,7 @@ public class ContactHelper extends HelperBase{
 
     checkContactDetailsById(contact.getId());
     String fullName = wd.findElement(By.cssSelector("#content>b")).getText();
-
-    //this has to be findElements and streamed
-     String [] phones = wd.findElements(By.cssSelector("#content>a"))
+    String [] phones = wd.findElements(By.cssSelector("#content>a"))
              .stream()
              .filter((p)-> p.getText() !=null)
              .map((p)-> p.getText())
