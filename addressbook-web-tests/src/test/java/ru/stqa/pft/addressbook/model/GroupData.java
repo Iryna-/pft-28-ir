@@ -67,7 +67,9 @@ public class GroupData {
   public String toString() {
     return "GroupData{" +
             "name='" + name + '\'' +
-            ", id='" + id + '\'' +
+            ", header='" + header + '\'' +
+            ", footer='" + footer + '\'' +
+            ", id=" + id +
             '}';
   }
 
