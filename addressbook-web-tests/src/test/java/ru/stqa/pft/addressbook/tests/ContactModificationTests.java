@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.*;
 
@@ -12,8 +14,8 @@ public class ContactModificationTests extends TestBase{
 
   @BeforeMethod
   public void ensurePreconditions(){
-    app.goTo().homePage();
-    if (app.contact().all().size()==0){
+    if (app.db().contacts().size() ==0){
+      app.goTo().homePage();
       app.contact().create(new ContactData()
               .withName("Name")
               .withMiddleName("Middle")
@@ -27,8 +29,8 @@ public class ContactModificationTests extends TestBase{
 
   @Test
   public void testContactModification(){
-
-    Contacts before = app.contact().all();
+    app.goTo().homePage();
+    Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData()
             .withName("Name007")
@@ -41,9 +43,8 @@ public class ContactModificationTests extends TestBase{
     app.contact().modify(contact);
     app.goTo().homePage();
     assertThat(app.contact().count(), equalTo(before.size()));
-    Contacts after = app.contact().all();
+    Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
   }
-
 
 }
