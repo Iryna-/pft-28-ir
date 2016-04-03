@@ -65,8 +65,17 @@ public class ContactHelper extends HelperBase{
     return wd.findElements(By.name("selected[]")).size();
   }
 
+  public void selectGroup(String group) {
+    new Select(wd.findElement(By.name("to_group")))
+            .selectByVisibleText(group);
+  }
+
+  public void addToGroup() {
+    click(By.name("add"));
+  }
+
   public void selectContactById (int id) {
-    wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
+    click(By.cssSelector("input[value='" + id + "']"));
   }
 
   public void deleteSelectedContact() {
@@ -191,6 +200,5 @@ public class ContactHelper extends HelperBase{
             .withWorkPhone(phones[2]);
             //.withAddress(address);
   }
-
 
 }
