@@ -84,7 +84,6 @@ public class ContactDataGenerator {
                 contact.getEmail(),
                 contact.getHomePhone(),
                 contact.getAddress(),
-                contact.getGroup(),
                 contact.getPhoto()));
       }
     }
@@ -100,7 +99,6 @@ public class ContactDataGenerator {
               .withEmail(String.format("email%s@example.com", i))
               .withHomePhone("020700099999")
               .withAddress(String.format("Address%s", i))
-              .withGroup("group1")
               .withPhoto(new File("src/test/resources/bird.jpg")));
     }
     return contacts;

@@ -20,8 +20,7 @@ public class ContactDeletionTests extends TestBase {
               .withSurname("Surname")
               .withEmail("name.surname@gmail.com")
               .withHomePhone("07511111111")
-              .withAddress("Address line 1")
-              .withGroup("group1"));
+              .withAddress("Address line 1"));
     }
   }
 

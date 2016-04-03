@@ -3,9 +3,12 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
+import org.hibernate.annotations.ManyToAny;
 import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @XStreamAlias("contact")
@@ -18,6 +21,8 @@ public class ContactData {
   @Expose
   @Column(name = "firstname")
   private String name;
+
+
 
   @Expose
   @Column(name = "middlename")
@@ -46,9 +51,13 @@ public class ContactData {
   @Type(type = "text")
   private String address;
 
+
   @Expose
-  @Transient
-  private String group;
+  @ManyToMany
+  @JoinTable (name = "address_in_groups",
+          joinColumns = @JoinColumn(name = "id"),
+          inverseJoinColumns = @JoinColumn(name = "group_id"))
+  private Set<GroupData> groups = new HashSet<GroupData>();
 
   @XStreamOmitField
   @Id
@@ -140,42 +149,12 @@ public class ContactData {
     return address;
   }
 
-  public String getGroup() {
-    return group;
-  }
-
   public int getId() {
     return id;
   }
 
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    ContactData that = (ContactData) o;
-
-    if (id != that.id) return false;
-    if (name != null ? !name.equals(that.name) : that.name != null) return false;
-    if (middleName != null ? !middleName.equals(that.middleName) : that.middleName != null) return false;
-    if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
-    if (email != null ? !email.equals(that.email) : that.email != null) return false;
-    if (address != null ? !address.equals(that.address) : that.address != null) return false;
-    return homePhone != null ? homePhone.equals(that.homePhone) : that.homePhone == null;
-
-  }
-
-  @Override
-  public int hashCode() {
-    int result = name != null ? name.hashCode() : 0;
-    result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
-    result = 31 * result + (surname != null ? surname.hashCode() : 0);
-    result = 31 * result + (email != null ? email.hashCode() : 0);
-    result = 31 * result + (address != null ? address.hashCode() : 0);
-    result = 31 * result + id;
-    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
-    return result;
+  public Groups getGroups() {
+    return new Groups(groups);
   }
 
   public File getPhoto() {
@@ -233,10 +212,6 @@ public class ContactData {
     return this;
   }
 
-  public ContactData withGroup(String group) {
-    this.group = group;
-    return this;
-  }
 
   public ContactData withId(int id) {
     this.id = id;
@@ -284,4 +259,37 @@ public class ContactData {
             '}';
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    ContactData that = (ContactData) o;
+
+    if (id != that.id) return false;
+    if (name != null ? !name.equals(that.name) : that.name != null) return false;
+    if (middleName != null ? !middleName.equals(that.middleName) : that.middleName != null) return false;
+    if (surname != null ? !surname.equals(that.surname) : that.surname != null) return false;
+    if (email != null ? !email.equals(that.email) : that.email != null) return false;
+    if (address != null ? !address.equals(that.address) : that.address != null) return false;
+    return homePhone != null ? homePhone.equals(that.homePhone) : that.homePhone == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = name != null ? name.hashCode() : 0;
+    result = 31 * result + (middleName != null ? middleName.hashCode() : 0);
+    result = 31 * result + (surname != null ? surname.hashCode() : 0);
+    result = 31 * result + (email != null ? email.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + id;
+    result = 31 * result + (homePhone != null ? homePhone.hashCode() : 0);
+    return result;
+  }
+
+  public ContactData inGroup(GroupData group) {
+    groups.add(group);
+    return this;
+  }
 }
