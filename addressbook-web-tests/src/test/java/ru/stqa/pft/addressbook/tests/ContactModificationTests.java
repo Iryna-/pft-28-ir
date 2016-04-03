@@ -33,18 +33,18 @@ public class ContactModificationTests extends TestBase{
     Contacts before = app.db().contacts();
     ContactData modifiedContact = before.iterator().next();
     ContactData contact = new ContactData()
-            .withName("Name007")
-            .withMiddleName("Middle1")
-            .withSurname("Surname1")
-            .withEmail("name.surname1@gmail.com")
+            .withName("NameNew")
+            .withMiddleName("MiddleNew")
+            .withSurname("SurnameNew")
+            .withEmail("name.surnameNew@gmail.com")
             .withHomePhone("07511112222")
-            .withAddress("Address line 22")
+            .withAddress("Address line 22 New")
             .withId(modifiedContact.getId());
     app.contact().modify(contact);
     app.goTo().homePage();
     assertThat(app.contact().count(), equalTo(before.size()));
     Contacts after = app.db().contacts();
     assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+    verifyContactListInUI();
   }
-
 }
