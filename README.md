@@ -1,4 +1,2 @@
-# pft-28-iryna.svitlychenko
+# pft-28-ir
 Programming for testers
-My first commit
-Trying commit using SourceTree
